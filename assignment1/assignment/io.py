@@ -19,7 +19,9 @@ def imread(filename):
     ValueError
         if the image format is unknown or invalid
     '''
+
     raise NotImplementedError('Implement this function/method.')
+    return np.ndarray([1, 2, 3])
 
 
 def imwrite(filename, image):

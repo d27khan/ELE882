@@ -30,7 +30,9 @@ def rgb2grey(image):
     ValueError
         if the image is already greyscale or if the input image isn't 8bpc
     '''
+
     raise NotImplementedError('Implement this function/method.')
+    return np.ndarray([1, 2, 3])
 
 
 def grey2rgb(image):
