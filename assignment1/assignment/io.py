@@ -52,4 +52,29 @@ def imwrite(filename, image):
     image : numpy.ndarray
         image being saved
     '''
-    raise NotImplementedError('Implement this function/method.')
+    # Extract the image dimensions and check that it's 8bpc
+    if image.ndim == 2:
+        height, width = image.shape
+        # Convert the image values to strings.
+        values = image.astype(str)
+            # Construct the file contents.
+        rows = [' '.join(row) for row in values]
+        header = '\n'.join(['P2', str(width), str(height), "255"])
+    elif image.ndim == 3:
+        height, width, color = image.shape
+        # Convert the image values to strings.
+        values = image.astype(str)
+            # Construct the file contents.
+        rows = [' '.join(row) for row in values]
+        header = '\n'.join(['P3', str(width), str(height), "255"])
+        
+
+    if image.dtype != np.uint8:
+        raise ValueError('Can only support 8-bit images.')
+
+    data = '\n'.join(rows)
+    # Write it to a file.
+    with open(filename, 'wt') as f:
+        f.write(header)
+        f.write('\n')
+        f.write(data)
