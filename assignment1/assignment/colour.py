@@ -30,9 +30,12 @@ def rgb2grey(image):
     ValueError
         if the image is already greyscale or if the input image isn't 8bpc
     '''
-
-    raise NotImplementedError('Implement this function/method.')
-    return np.ndarray([1, 2, 3])
+    if image.ndim == 2 or image.dtype != np.uint8:
+        raise ValueError('Can only support 8-bit images.')
+    # No Grey or 8Bit
+    values = image.astype(float) / 255.0
+    r, g, b = values[:, :, 0], values[:, :, 1], values[:, :, 2]
+    return np.array((0.299 * r + 0.587 * g + 0.114 * b) * 255.0, dtype=np.uint8)
 
 
 def grey2rgb(image):
@@ -56,4 +59,15 @@ def grey2rgb(image):
     ValueError
         if the input image is already RGB or if the image isn't 8bpc
     '''
-    raise NotImplementedError('Implement this function/method.')
+    if image.ndim == 3 or image.dtype != np.uint8:
+        raise ValueError('Can only support 8-bit images.')
+    # No RGB or 8Bit
+    h, w = image.shape
+    img = np.array([[[1 for k in range(3)] for j in range(w)] for i in range(h)], dtype=np.uint8)
+    # creating new 3d array
+    for row in range(h):
+        for element in range(w):
+            for c in range(3):
+                img[row][element][c] = image[row][element]
+    # iterate through array and add values
+    return img
